@@ -8,7 +8,7 @@ class AppExceptions {
       case 401:
         return Exception('Unauthorized');
       case 403:
-        return Exception('Forbidden');
+        return Exception('Forbidden Access , Returned Status Code: 403');
       case 404:
         return Exception('Not Found');
       case 500:

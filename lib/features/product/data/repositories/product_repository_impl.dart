@@ -36,7 +36,7 @@ class ProductRepositoryImpl extends ProductRepository {
         ProductsInfo(
           productList: storedProductList,
           hasMore: hasMore,
-          fromStorage: true,
+          isOnline: false,
         ),
       );
     } else {
@@ -51,7 +51,7 @@ class ProductRepositoryImpl extends ProductRepository {
             ProductsInfo(
               productList: storedProductList,
               hasMore: hasMore,
-              fromStorage: true,
+              isOnline: true,
             ),
           );
         }
@@ -69,7 +69,7 @@ class ProductRepositoryImpl extends ProductRepository {
           ProductsInfo(
             productList: remoteProducts,
             hasMore: hasMore,
-            fromStorage: false,
+            isOnline: true,
           ),
         );
       } on Exception catch (e, _) {

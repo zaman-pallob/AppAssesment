@@ -11,13 +11,13 @@ class ProductsLoading extends ProductsState {}
 
 class ProductsEmpty extends ProductsState {}
 
-class ProductsSuccess extends ProductsState {
+class ProductsLoaded extends ProductsState {
   final List<ProductModel> products;
   final bool hasMore;
-  final bool fromStorage;
-  ProductsSuccess(this.products, this.hasMore, this.fromStorage);
+  final bool isOnline;
+  ProductsLoaded(this.products, this.hasMore, this.isOnline);
   @override
-  List<Object?> get props => [products, hasMore, fromStorage];
+  List<Object?> get props => [products, hasMore, isOnline];
 }
 
 class ProductsError extends ProductsState {
