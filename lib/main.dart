@@ -1,6 +1,12 @@
 import 'package:app_assesment/dependency/di.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'features/login/presentation/pages/login_page.dart';
+import 'features/product/domain/usecases/get_product.dart';
+import 'features/product/presentation/bloc/product_bloc.dart';
+import 'features/product/presentation/pages/product_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +28,14 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: ThemeData(useMaterial3: true),
+          routes: {
+            '/login': (_) => const LoginPage(),
+            '/products': (_) => BlocProvider(
+              create: (_) => ProductsBloc(dependency<GetProducts>()),
+              child: const ProductPage(),
+            ),
+          },
+          initialRoute: '/products',
         );
       },
     );

@@ -3,6 +3,7 @@ import 'package:app_assesment/features/product/presentation/widgets/product_item
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../bloc/product_bloc.dart';
 import '../bloc/product_state.dart';
@@ -32,13 +33,19 @@ class _ProductPageState extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
+    context.read<ProductsBloc>().add(ProductInitial());
     scrollController.addListener(_onScroll);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Products')),
+      backgroundColor: Colors.white70,
+      appBar: AppBar(
+        backgroundColor: Colors.white54,
+        title: Text('Products', style: TextStyle(fontSize: 18.sp)),
+        centerTitle: true,
+      ),
       body: BlocConsumer<ProductsBloc, ProductsState>(
         listener: (context, state) {
           if (state is RedirectToLogin) {
@@ -47,7 +54,9 @@ class _ProductPageState extends State<ProductPage> {
         },
         builder: (context, state) {
           if (state is ProductsLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const Center(
+              child: CircularProgressIndicator(color: Colors.green),
+            );
           } else if (state is ProductsError) {
             return Center(child: Text(state.message));
           } else if (state is ProductsLoaded) {
@@ -66,23 +75,43 @@ class _ProductPageState extends State<ProductPage> {
     return Column(
       children: [
         if (!state.isOnline)
-          Container(
-            color: Colors.amber,
-            width: double.infinity,
-            padding: const EdgeInsets.all(8),
-            child: const Text('Offline Mode'),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 10.w),
+            child: Container(
+              color: Colors.amber,
+              width: double.infinity,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.all(8),
+              child: const Text('Offline Mode'),
+            ),
           ),
         Expanded(
           child: RefreshIndicator(
             onRefresh: _onRefresh,
-            child: ListView.separated(
-              controller: scrollController,
-              itemCount: state.products.length,
-              separatorBuilder: (_, __) => const Divider(height: 1),
-              itemBuilder: (context, index) {
-                final product = state.products[index];
-                return ProductItem(product: product);
-              },
+            child: Stack(
+              children: [
+                GridView.builder(
+                  padding: EdgeInsets.all(10.w),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 10.h,
+                    crossAxisSpacing: 10.w,
+                    childAspectRatio: 160.w / 200.h,
+                  ),
+                  controller: scrollController,
+                  itemCount: state.products.length,
+
+                  itemBuilder: (context, index) {
+                    final product = state.products[index];
+                    return ProductItem(product: product);
+                  },
+                ),
+                state.isLoadingMore
+                    ? const Center(
+                        child: CircularProgressIndicator(color: Colors.green),
+                      )
+                    : SizedBox.shrink(),
+              ],
             ),
           ),
         ),

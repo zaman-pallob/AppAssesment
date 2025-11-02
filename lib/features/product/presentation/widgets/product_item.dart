@@ -9,33 +9,57 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: CachedNetworkImage(
-        imageUrl: product.thumbnail,
-        width: 30.w,
-        height: 35.h,
-        fit: BoxFit.cover,
-        placeholder: (context, url) =>
-            Container(width: 30.w, height: 35.h, color: Colors.grey),
-        errorWidget: (context, url, error) =>
-            Container(width: 30.w, height: 35.h, color: Colors.grey),
+    return Container(
+      padding: EdgeInsets.all(10.w),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: BorderRadius.circular(5.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.cyanAccent.withValues(alpha: 0.3),
+            blurRadius: 1,
+            spreadRadius: 1,
+          ),
+        ],
       ),
-
-      title: Expanded(
-        child: Column(
-          children: [
-            Text(
-              product.title,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 14.sp),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CachedNetworkImage(
+            imageUrl: product.thumbnail,
+            width: 110.w,
+            height: 120.h,
+            fit: BoxFit.cover,
+            placeholder: (context, url) =>
+                Container(width: 110.w, height: 120.h, color: Colors.grey),
+            errorWidget: (context, url, error) =>
+                Container(width: 110.w, height: 120.h, color: Colors.grey),
+          ),
+          SizedBox(height: 10.h),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  product.title,
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 13.sp),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      subtitle: Text(
-        '\$${product.price}',
-        style: TextStyle(fontSize: 13.sp, color: Colors.green),
+          ),
+          Text(
+            '\$${product.price}',
+            style: TextStyle(
+              fontSize: 13.sp,
+              color: Colors.green,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }

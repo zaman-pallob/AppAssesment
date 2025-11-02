@@ -57,10 +57,10 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     ProductsNextPage event,
     Emitter<ProductsState> emit,
   ) async {
-    final currentState = state;
-    if (currentState is ProductsLoaded && !isEnd && !isLoadingMore) {
+    if (state is ProductsLoaded && !isEnd && !isLoadingMore) {
       isLoadingMore = true;
-
+      ProductsLoaded currentState = state as ProductsLoaded;
+      emit(currentState.copyWith(isLoadingMore: isLoadingMore));
       final objects = await getProducts.call(
         skip: skip,
         limit: AppConstant.pageLimit,
@@ -91,7 +91,12 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
       final products = List.of(currentState.products)
         ..addAll(productsInfo.productList);
       emit(
-        ProductsLoaded(products, productsInfo.hasMore, productsInfo.isOnline),
+        ProductsLoaded(
+          products,
+          productsInfo.hasMore,
+          productsInfo.isOnline,
+          false,
+        ),
       );
     } else {
       if (productsInfo.productList.isEmpty) {
@@ -107,6 +112,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
             productsInfo.productList,
             productsInfo.hasMore,
             productsInfo.isOnline,
+            false,
           ),
         );
       }

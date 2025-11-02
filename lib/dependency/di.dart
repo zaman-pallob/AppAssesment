@@ -9,8 +9,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../features/product/data/datasources/product_local.dart';
 import '../features/product/data/repositories/product_repository_impl.dart';
+import '../features/product/domain/repositories/product_repository.dart';
 
-GetIt dependency = GetIt.instance;
+final dependency = GetIt.instance;
 Future injectDependecy() async {
   await Hive.initFlutter();
 
@@ -26,7 +27,7 @@ Future injectDependecy() async {
     () => RemoteDataSource(dependency<Dio>()),
   );
 
-  dependency.registerLazySingleton<ProductRepositoryImpl>(
+  dependency.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
       dependency<LocalDataSource>(),
       dependency<RemoteDataSource>(),
