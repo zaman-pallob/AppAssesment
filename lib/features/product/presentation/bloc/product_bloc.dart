@@ -1,5 +1,6 @@
 import 'package:app_assesment/core/constants/app_constant.dart';
 import 'package:app_assesment/core/errors/failures.dart';
+import 'package:app_assesment/core/utils/logger.dart';
 import 'package:app_assesment/features/product/domain/entities/products_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -114,7 +115,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
   handleFailure(Failure failure, Emitter<ProductsState> emit) {
     if (failure.message.contains("403")) {
       //redirect to login here
-      print("Redirect to login");
+      logger.d("Redirect to login");
     } else {
       emit(ProductsError(failure.message));
     }
