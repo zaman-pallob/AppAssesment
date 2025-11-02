@@ -7,6 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import '../features/product/data/datasources/product_local.dart';
+import '../features/product/data/repositories/product_repository_impl.dart';
 
 GetIt dependency = GetIt.instance;
 Future injectDependecy() async {
@@ -15,12 +16,20 @@ Future injectDependecy() async {
   Box trackerBox = await Hive.openBox(AppConstant.tracker);
   Box productListBox = await Hive.openBox(AppConstant.productList);
   dependency.registerLazySingleton<Dio>(() => Client.createClient());
-  dependency.registerLazySingleton<NetworkInfoImpl>(() => NetworkInfoImpl());
+  dependency.registerLazySingleton<NetworkInfo>(() => NetworkInfo());
 
   dependency.registerLazySingleton<LocalDataSource>(
     () => LocalDataSource(trackerBox, productListBox),
   );
   dependency.registerLazySingleton<RemoteDataSource>(
     () => RemoteDataSource(dependency<Dio>()),
+  );
+
+  dependency.registerLazySingleton<ProductRepositoryImpl>(
+    () => ProductRepositoryImpl(
+      dependency<LocalDataSource>(),
+      dependency<RemoteDataSource>(),
+      dependency<NetworkInfo>(),
+    ),
   );
 }

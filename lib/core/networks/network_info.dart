@@ -2,15 +2,9 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 
-abstract class NetworkInfo {
-  Future<bool> get isConnected;
-  Future<bool> get hasInternet;
-}
-
-class NetworkInfoImpl implements NetworkInfo {
+class NetworkInfo {
   final Connectivity _connectivity = Connectivity();
 
-  @override
   Future<bool> get isConnected async {
     final results = await _connectivity.checkConnectivity();
 
@@ -22,7 +16,6 @@ class NetworkInfoImpl implements NetworkInfo {
     }
   }
 
-  @override
   Future<bool> get hasInternet async {
     try {
       final result = await InternetAddress.lookup('google.com');

@@ -17,17 +17,23 @@ class LocalDataSource {
     );
   }
 
-  Future<List<ProductModel>> getProducts(int skip) async {
+  Future<(List<ProductModel>, bool)> getLocalProducts(
+    int skip,
+    int limit,
+  ) async {
     var page = "page_$skip";
     var data = productListBox.get(page, defaultValue: null);
+    List keyList = productListBox.keys.toList();
     if (data != null) {
       List<dynamic> jsonList = jsonDecode(data);
       List<ProductModel> products = jsonList
           .map((e) => ProductModel.fromJson(Map<String, dynamic>.from(e)))
           .toList();
-      return products;
+
+      return (products, keyList.contains("page_${skip + limit}"));
     }
-    return [];
+
+    return (<ProductModel>[], false);
   }
 
   Future<DateTime?> lastSyncTime() async {

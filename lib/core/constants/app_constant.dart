@@ -5,4 +5,6 @@ class AppConstant {
   static const tracker = "tracker";
   static const productList = "product_list";
   static const lastSync = "last_sync";
+  static const pageLimit = 10;
+  static const syncDuration = Duration(minutes: 2);
 }

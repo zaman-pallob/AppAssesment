@@ -1,20 +1,14 @@
 import 'package:dio/dio.dart';
 
-class Exceptions {
+class AppExceptions {
   static getExceptions(Response res) {
     switch (res.statusCode) {
       case 400:
-        return Exception('Bad Request');
+        return ('Bad Request');
       case 401:
         return Exception('Unauthorized');
       case 403:
-        return DioException(
-          requestOptions: res.requestOptions,
-          response: Response(
-            requestOptions: res.requestOptions,
-            statusCode: res.statusCode,
-          ),
-        );
+        return Exception('Forbidden');
       case 404:
         return Exception('Not Found');
       case 500:
