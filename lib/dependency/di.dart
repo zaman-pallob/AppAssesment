@@ -2,6 +2,7 @@ import 'package:app_assesment/core/constants/app_constant.dart';
 import 'package:app_assesment/core/networks/client.dart';
 import 'package:app_assesment/core/networks/network_info.dart';
 import 'package:app_assesment/features/product/data/datasources/product_remote.dart';
+import 'package:app_assesment/features/product/domain/usecases/get_product.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -32,4 +33,6 @@ Future injectDependecy() async {
       dependency<NetworkInfo>(),
     ),
   );
+
+  dependency.registerLazySingleton(() => GetProducts(dependency()));
 }
