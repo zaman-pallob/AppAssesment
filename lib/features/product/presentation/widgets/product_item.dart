@@ -10,14 +10,17 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: product.thumbnail.isNotEmpty
-          ? CachedNetworkImage(
-              imageUrl: product.thumbnail,
-              width: 30.w,
-              height: 35.h,
-              fit: BoxFit.cover,
-            )
-          : Container(width: 30.w, height: 35.h, color: Colors.grey),
+      leading: CachedNetworkImage(
+        imageUrl: product.thumbnail,
+        width: 30.w,
+        height: 35.h,
+        fit: BoxFit.cover,
+        placeholder: (context, url) =>
+            Container(width: 30.w, height: 35.h, color: Colors.grey),
+        errorWidget: (context, url, error) =>
+            Container(width: 30.w, height: 35.h, color: Colors.grey),
+      ),
+
       title: Expanded(
         child: Column(
           children: [
