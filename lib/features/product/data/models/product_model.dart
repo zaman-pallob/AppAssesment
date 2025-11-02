@@ -1,26 +1,17 @@
 // ignore_for_file: overridden_fields
 
-import 'package:hive/hive.dart';
 import '../../domain/entities/product.dart';
 
-part 'product_model.g.dart';
-
-@HiveType(typeId: 0)
 class ProductModel extends Product {
   @override
-  @HiveField(0)
   final int id;
   @override
-  @HiveField(1)
   final String title;
   @override
-  @HiveField(2)
   final String description;
   @override
-  @HiveField(3)
   final double price;
   @override
-  @HiveField(4)
   final String thumbnail;
 
   const ProductModel({

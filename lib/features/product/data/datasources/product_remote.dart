@@ -1,17 +1,11 @@
 import 'package:app_assesment/core/errors/exceptions.dart';
 import 'package:dio/dio.dart';
-
 import '../models/product_model.dart';
 
-abstract class RemoteDataSource {
-  Future<List<ProductModel>> getProductsFromAPI(int limit, int skip);
-}
-
-class RemoteDataSourceImp extends RemoteDataSource {
+class RemoteDataSource {
   Dio dio;
-  RemoteDataSourceImp(this.dio);
+  RemoteDataSource(this.dio);
 
-  @override
   Future<List<ProductModel>> getProductsFromAPI(int limit, int skip) async {
     var res = await dio.get(
       '/products',
