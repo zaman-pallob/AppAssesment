@@ -11,6 +11,8 @@ class ProductsLoading extends ProductsState {}
 
 class ProductsEmpty extends ProductsState {}
 
+class RedirectToLogin extends ProductsState {}
+
 class ProductsLoaded extends ProductsState {
   final List<ProductModel> products;
   final bool hasMore;

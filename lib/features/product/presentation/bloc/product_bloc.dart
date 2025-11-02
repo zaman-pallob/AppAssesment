@@ -39,6 +39,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     ProductsRefreshed event,
     Emitter<ProductsState> emit,
   ) async {
+    emit(ProductsLoading());
     skip = 0;
     isEnd = false;
     final object = await getProducts.call(
@@ -116,6 +117,7 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     if (failure.message.contains("403")) {
       //redirect to login here
       logger.d("Redirect to login");
+      emit(RedirectToLogin());
     } else {
       emit(ProductsError(failure.message));
     }
