@@ -1,6 +1,7 @@
 import 'package:app_assesment/core/constants/app_constant.dart';
 import 'package:app_assesment/core/errors/failures.dart';
 import 'package:app_assesment/core/utils/logger.dart';
+import 'package:app_assesment/features/product/data/models/product_model.dart';
 import 'package:app_assesment/features/product/domain/entities/products_info.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -80,47 +81,33 @@ class ProductsBloc extends Bloc<ProductsEvent, ProductsState> {
     bool isNexPage,
     ProductsState currentState,
   ) {
+    if (productsInfo.hasMore) {
+      skip += productsInfo.productList.length;
+    } else {
+      isEnd = true;
+    }
+    List<ProductModel> products = [];
     if (isNexPage) {
       //when we are laoding next page data
-      if (productsInfo.hasMore) {
-        skip += productsInfo.productList.length;
-      } else {
-        isEnd = true;
-      }
       currentState = currentState as ProductsLoaded;
-      final products = List.of(currentState.products)
+      products = List.of(currentState.products)
         ..addAll(productsInfo.productList);
-      emit(
-        ProductsLoaded(
-          products,
-          productsInfo.hasMore,
-          productsInfo.isOnline,
-          false,
-        ),
-      );
     } else {
-      if (productsInfo.productList.isEmpty) {
-        emit(ProductsEmpty());
-      } else {
-        if (productsInfo.hasMore) {
-          skip += productsInfo.productList.length;
-        } else {
-          isEnd = true;
-        }
-        emit(
-          ProductsLoaded(
-            productsInfo.productList,
-            productsInfo.hasMore,
-            productsInfo.isOnline,
-            false,
-          ),
-        );
-      }
+      products = productsInfo.productList;
     }
+
+    emit(
+      ProductsLoaded(
+        products,
+        productsInfo.hasMore,
+        productsInfo.isOnline,
+        false,
+      ),
+    );
   }
 
   handleFailure(Failure failure, Emitter<ProductsState> emit) {
-    if (failure.message.contains("403")) {
+    if (failure.message.contains("401")) {
       //redirect to login here
       logger.d("Redirect to login");
       emit(RedirectToLogin());
