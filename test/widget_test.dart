@@ -9,6 +9,9 @@ import 'package:app_assesment/features/product/data/models/product_model.dart';
 import 'package:app_assesment/features/product/domain/entities/products_info.dart';
 import 'package:app_assesment/features/product/domain/repositories/product_repository.dart';
 import 'package:app_assesment/features/product/domain/usecases/get_product.dart';
+import 'package:app_assesment/features/product/presentation/widgets/product_item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
@@ -26,7 +29,7 @@ void main() {
   });
 
   // Added test for GetProducts usecase
-  test('Get Products', () async {
+  test('Unit test: Get Products', () async {
     final model = ProductModel(
       id: 1,
       title: 't',
@@ -57,5 +60,25 @@ void main() {
     verify(
       () => mockRepo.getProducts(skip: 0, limit: 16, forceRefresh: false),
     ).called(1);
+  });
+
+  testWidgets('Widget Test: ProductItem ', (tester) async {
+    final model = ProductModel(
+      id: 1,
+      title: 'Test',
+      description: 'x',
+      price: 10,
+      thumbnail: 't',
+    );
+    await tester.pumpWidget(
+      ScreenUtilInit(
+        designSize: Size(360, 844),
+        builder: (ctx, _) => MaterialApp(
+          home: Scaffold(body: ProductItem(product: model)),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(find.text('Test'), findsOneWidget);
   });
 }
