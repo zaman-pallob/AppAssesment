@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
               child: const ProductPage(),
             ),
           },
-          initialRoute: '/products',
+          initialRoute: '/login',
         );
       },
     );
