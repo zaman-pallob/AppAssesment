@@ -10,7 +10,7 @@ class LoginPage extends StatelessWidget {
       body: Column(
         children: [
           Text(
-            'Login ',
+            'Login',
             style: TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 50.h),
@@ -39,7 +39,7 @@ class LoginPage extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pushReplacementNamed('/products');
             },
-            child: Text('Login', style: TextStyle(fontSize: 16.sp)),
+            child: Text('Submit', style: TextStyle(fontSize: 16.sp)),
           ),
         ],
       ),
