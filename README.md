@@ -1,5 +1,5 @@
 
-# 📱 Product Listing App
+# 📱 Assesment App
 
 A Flutter-based mobile application that displays a list of products, supports offline caching, and includes a simple login flow. This app uses **Clean Architecture**, **BLoC**, and **Hive** for offline data persistence.
 
@@ -16,7 +16,7 @@ This app showcases a list of products retrieved from a remote API (https://dummy
 - **Login Flow**: The user lands on a login screen. Upon clicking "Login", they're redirected to the product page without credential validation (demo purposes).
 
 - **Product Fetching**:
-  - Data is fetched from `https://dummyjson.com`.
+  - Data is fetched from `https://dummyjson.com/products`.
   - Fetched product data is cached locally using Hive.
   - Pagination is implemented using a `skip` parameter and local box storage (`page_0`, `page_16`, etc.).
   - The app uses a sync timer (2 minutes interval) to determine if new data needs to be fetched.
@@ -58,8 +58,8 @@ lib/
 
 ## 📥 App Download
 
-**[👉 Download APK here](https://example.com/download/product-listing-app.apk)**  
-> _Replace this link with your actual APK hosting link (e.g., Firebase App Distribution, GitHub Releases, etc.)_
+**[👉 Download APK here](https://github.com/zaman-pallob/AppAssesment/releases/download/Release/assesment.apk)**  
+
 
 ---
 
